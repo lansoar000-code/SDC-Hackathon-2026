@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A simple, interactive restaurant food preparation prediction demo."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23c8f169'/%3E%3Ctext x='50%25' y='68%25' text-anchor='middle' font-family='Arial' font-weight='bold' font-size='26' fill='%2317200f'%3EP%3C/text%3E%3C/svg%3E"
+    />
+    <title>PrepWise — Kitchen Forecast Demo</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="PrepWise home">
+          <span class="brand-mark" aria-hidden="true">P</span>
+          <span>prepwise<span class="brand-period">.</span></span>
+        </a>
+        <div class="demo-tag">
+          <span class="status-dot"></span> HACKATHON DEMO
+        </div>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <div class="eyebrow"><span></span> YOUR DAILY KITCHEN PLANNER</div>
+          <h1 id="page-title">
+            Prep smart.<br /><span>Serve with confidence.</span>
+          </h1>
+          <p class="intro-copy">
+            A little context goes a long way. Tell us what’s happening today and
+            get a simple prep estimate for your most-loved dishes.
+          </p>
+        </section>
+
+        <div class="dashboard">
+          <section class="planner-card" aria-labelledby="planner-title">
+            <div class="section-heading">
+              <div>
+                <div class="step-label">
+                  STEP 01 <span>·</span> SET THE SCENE
+                </div>
+                <h2 id="planner-title">What’s today looking like?</h2>
+              </div>
+              <span class="sparkle" aria-hidden="true">✳</span>
+            </div>
+
+            <fieldset class="question-group weather-group">
+              <legend>
+                <span class="question-number">01</span> Weather forecast
+              </legend>
+              <div class="weather-options">
+                <label class="weather-option">
+                  <input type="radio" name="weather" value="sunny" checked />
+                  <span class="weather-tile">
+                    <span class="weather-icon" aria-hidden="true">☀️</span>
+                    <span>Sunny</span>
+                    <span class="radio-indicator" aria-hidden="true"></span>
+                  </span>
+                </label>
+                <label class="weather-option">
+                  <input type="radio" name="weather" value="cloudy" />
+                  <span class="weather-tile">
+                    <span class="weather-icon" aria-hidden="true">☁️</span>
+                    <span>Cloudy</span>
+                    <span class="radio-indicator" aria-hidden="true"></span>
+                  </span>
+                </label>
+                <label class="weather-option">
+                  <input type="radio" name="weather" value="rainy" />
+                  <span class="weather-tile">
+                    <span class="weather-icon" aria-hidden="true">🌧️</span>
+                    <span>Rainy</span>
+                    <span class="radio-indicator" aria-hidden="true"></span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="question-group toggle-group">
+              <legend>
+                <span class="question-number">02</span> Is it exam week?
+              </legend>
+              <div class="choice-toggle">
+                <label
+                  ><input type="radio" name="exam" value="no" checked /><span
+                    >No</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="exam" value="yes" /><span
+                    >Yes, it is</span
+                  ></label
+                >
+              </div>
+            </fieldset>
+
+            <fieldset class="question-group toggle-group">
+              <legend>
+                <span class="question-number">03</span> Is there a local event?
+              </legend>
+              <div class="choice-toggle">
+                <label
+                  ><input type="radio" name="event" value="no" checked /><span
+                    >No</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="event" value="yes" /><span
+                    >Yes, there is</span
+                  ></label
+                >
+              </div>
+            </fieldset>
+
+            <button class="predict-button" id="predict-button" type="button">
+              <span>Predict food quantity</span>
+              <span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+            <p class="button-note">
+              Takes a moment. Could save you a lot of guesswork.
+            </p>
+          </section>
+
+          <section
+            class="results-card"
+            aria-labelledby="results-title"
+            aria-live="polite"
+          >
+            <div class="results-topline">
+              <span class="results-kicker"
+                ><span class="status-dot"></span> YOUR PREP PLAN</span
+              >
+              <span class="simulated-tag">SIMULATED DATA</span>
+            </div>
+
+            <div class="results-heading">
+              <div>
+                <div class="step-label">
+                  STEP 02 <span>·</span> YOUR ESTIMATE
+                </div>
+                <h2 id="results-title">Today’s kitchen forecast</h2>
+              </div>
+              <span class="forecast-icon" aria-hidden="true">↗</span>
+            </div>
+
+            <div class="empty-state" id="empty-state">
+              <span class="empty-illustration" aria-hidden="true">🍜</span>
+              <h3>Your prep plan starts here</h3>
+              <p>
+                Set today’s conditions and tap the button to see your suggested
+                quantities.
+              </p>
+            </div>
+
+            <div class="results-content" id="results-content" hidden>
+              <div class="total-banner">
+                <div>
+                  <span class="total-label">TOTAL SUGGESTED PREP</span>
+                  <div class="total-value">
+                    <span id="total-quantity">0</span><span> servings</span>
+                  </div>
+                </div>
+                <span class="total-icon" aria-hidden="true">✦</span>
+              </div>
+
+              <div class="dish-list" id="dish-list"></div>
+
+              <div class="rule-summary">
+                <span class="rule-icon" aria-hidden="true">ⓘ</span>
+                <p id="rule-summary-text"></p>
+              </div>
+            </div>
+
+            <div class="demo-disclaimer">
+              <span aria-hidden="true">✳</span>
+              Demo estimates only — based on simple sample rules, not live
+              restaurant data.
+            </div>
+          </section>
+        </div>
+
+        <footer class="page-footer">
+          <span
+            >MADE FOR BUSY KITCHENS <span class="footer-dot">·</span> BUILT FOR
+            THE FUTURE</span
+          >
+          <span>PREPWISE <span class="footer-year">/ DEMO</span></span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
