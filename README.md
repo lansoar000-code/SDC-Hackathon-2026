@@ -1,29 +1,37 @@
-# SDC-Hackathon-2026
+# PrepWise｜餐厅需求预测与备餐建议
+SDC Hackathon 2026 · Domain 2 · Team 牛马来西亚
 
-SDC-Hackathon 2026 - Domain 2 - Team 牛马来西亚
+**当前阶段：架构说明与目录占位（2026-10-21）。2026-10-22 开始实现。**
 
-## Project structure
+目标：帮助中小餐厅根据历史销量和日期、天气、考试周、活动等条件，估计下一天各菜品的需求，并给出备餐参考，减少多做和少做。
 
-```text
-frontend/
-  index.html
-  style.css
-  script.js
-backend/
-  main.py
-  database.py
-  requirements.txt
-```
+## 先从这里看
+1. [项目要做出什么效果](docs/01-product-plan.md)
+2. [完整文件地图：每个文件干什么](docs/02-file-map.md)
+3. [系统怎么连起来](docs/03-system-flow.md)
+4. [前后端接口草案](docs/04-api-plan.md)
+5. [数据字段与预测原则](docs/05-data-plan.md)
+6. [团队分工](docs/06-team-work.md)
+7. [明天的开发顺序](docs/07-tomorrow-plan.md)
+8. [已确认内容与待定事项](docs/08-decisions.md)
 
-The frontend is the existing PrepWise static demo. Open `frontend/index.html` in a browser, or serve the `frontend` directory with a static web server. Its predictions currently use simulated rules.
+## 目录
+| 目录 | 通俗解释 | 状态 |
+|---|---|---|
+| frontend/ | 用户看到的页面和按钮 | 已有静态演示，其余占位 |
+| backend/ | 接收请求、校验数据、调用预测、保存结果 | 尚未实现 |
+| forecasting/ | 整理历史数据、训练和评估预测方法 | 尚未实现 |
+| data/ | 原始数据、清理后的数据与预测输出 | 只有说明，无真实数据 |
+| models/ | 保存训练后模型及其版本说明 | 只有说明 |
+| docs/ | 架构、接口、数据、分工与开发顺序 | 本次新增说明 |
+| deliverables/ | 比赛报告、PPT、演示视频材料 | 只有目录与写作提纲 |
+| tests/ | 以后验证接口、数据和预测逻辑 | 只有检查计划 |
 
-The backend files are placeholders; backend API and database functionality have not been implemented yet.
+## 现在能做什么
+打开 `frontend/index.html` 可以查看已有 PrepWise 页面。当前页面用前端规则生成模拟结果，尚未连接 Python 后端、真实数据库或训练模型。
+新增 Python/JavaScript 文件只有说明注释；不是可以运行的已完成功能。没有填写虚构训练数据、预测结果或模型效果。
 
-## Branches
+## Git 分支
+`frontend` 写前端，`backend` 写后端和预测模块，`develop` 联调，`main` 放稳定版本。
+四个分支先使用同一份架构起点，之后各自提交并通过合并同步。
 
-- `frontend`: frontend development.
-- `backend`: backend development.
-- `develop`: integration of frontend and backend changes.
-- `main`: stable project version.
-
-Merge frontend and backend changes into `develop` for integration, then merge verified changes into `main`.
