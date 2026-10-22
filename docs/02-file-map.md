@@ -25,6 +25,10 @@
 | forecasting/features.py | 训练/在线共用历史特征 |
 | forecasting/baseline.py | 同星期或近七次均值 |
 | forecasting/training.py | 标准化 Ridge、时间验证、择优、JSON 保存 |
+| forecasting/synthetic.py | 带种子的虚构食堂数据生成器 |
+| forecasting/synthetic_evaluation.py | 保留最后时间段的滚动单步评估 |
+| prepare_synthetic.py | 生成、整批校验、隔离入库、评估与最终训练 |
+| run_synthetic.py | 使用独立模拟数据库在 8002 端口运行网站 |
 | forecasting/predictor.py | demo/baseline/model 选择与备餐建议 |
 | forecasting/evaluate.py | MAE、RMSE、WAPE、Bias |
 | forecasting/cli.py | 五个编号脚本共用命令行逻辑 |
