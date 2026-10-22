@@ -1,2 +1,10 @@
-# 规划占位，尚未实现；2026-10-22 开始开发。
-# 职责：菜品数据读写：把数据库操作与 API 路由分开。
+"""菜品查询。菜品在导入销量时创建，不自动生成虚构菜品。"""
+
+
+def list_dishes(connection) -> list[dict]:
+    return [
+        dict(row)
+        for row in connection.execute(
+            "SELECT dish_id, dish_name FROM dishes ORDER BY dish_name, dish_id"
+        )
+    ]

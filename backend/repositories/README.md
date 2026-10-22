@@ -1,5 +1,4 @@
 # backend/repositories：板块说明
 
-数据库操作处：统一保存和读取菜品、销量及预测记录。路由不直接拼接数据库操作。
+SQL 访问层：dishes 查询菜品，sales 检查重复并保存销量，predictions 保存和读取 JSON 快照。事务由服务通过 database.connect() 管理。
 
-更多：[完整文件地图](../../docs/02-file-map.md)。

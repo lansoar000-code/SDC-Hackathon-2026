@@ -1,5 +1,4 @@
 # backend/services：板块说明
 
-业务处理处：协调导入、预测和报表。例如预测服务要读取历史、调用 forecasting、保存记录，再返回统一结果。
+业务流程层：import_service 原子导入，prediction_service 读取历史、预测和保存快照，report_service 对齐实际销量并区分事前与补做历史预测。
 
-更多：[完整文件地图](../../docs/02-file-map.md)。

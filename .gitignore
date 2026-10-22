@@ -218,3 +218,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# PrepWise local environment, business data and generated artifacts
+.venv/
+.runtime/
+__pycache__/
+*.pyc
+.ruff_cache/
+data/*.sqlite3*
+data/raw/*
+!data/raw/README.md
+data/processed/*
+!data/processed/README.md
+data/predictions/*
+!data/predictions/README.md
+models/*.json
+models/*.tmp
+tests/fixtures/*.csv
