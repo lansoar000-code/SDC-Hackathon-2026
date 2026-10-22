@@ -40,6 +40,7 @@ def prepare_dataset(output: Path, model_folder: Path, days: int, end_date: date)
         development,
         model_folder / "holdout_model.json",
         validation_start=manifest["validation_from"],
+        retain_candidates=True,
     )
     print("4/5 测试段滚动单步评估（不用于选模型）…", flush=True)
     report = evaluate_holdout(all_records, selection_model, manifest["test_from"], output)

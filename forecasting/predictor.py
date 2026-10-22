@@ -8,8 +8,9 @@ from pathlib import Path
 
 from backend.errors import AppError
 from forecasting.baseline import predict_baseline
+from forecasting.estimators import predict_one
 from forecasting.features import as_date, feature_vector, prior_sales
-from forecasting.training import MODEL_VERSION, apply_ridge, data_fingerprint
+from forecasting.training import MODEL_VERSION, data_fingerprint
 
 DEMO_RULES = [
     ("demo-rice", "Fried rice", 80, {"sunny": 5, "cloudy": 0, "rainy": -10}, 15, 25),
@@ -23,7 +24,9 @@ def load_artifact(path: Path):
         return None
     try:
         artifact = json.loads(path.read_text(encoding="utf-8"))
-        if artifact["version"] != MODEL_VERSION or not isinstance(artifact["models"], dict):
+        if artifact["version"] not in {MODEL_VERSION, "ridge-v1"} or not isinstance(
+            artifact["models"], dict
+        ):
             raise ValueError("模型格式不兼容")
         return artifact
     except (ValueError, KeyError, OSError) as error:
@@ -66,7 +69,7 @@ def predict(records, request, model_path: Path):
         estimate = predict_baseline(history, dish_id, request.target_date)
         if artifact and dish_id in artifact["models"]:
             vector = feature_vector(history, dish_id, request.target_date, request.model_dump())
-            estimate = apply_ridge(artifact["models"][dish_id], vector)
+            estimate = predict_one(artifact["models"][dish_id], vector)
             method = "model"
         if len(dish_history) < 7:
             warnings.append(
@@ -76,9 +79,11 @@ def predict(records, request, model_path: Path):
             warnings.append(
                 f"{latest['dish_name']} 最新记录为 {latest['date']}；存在日期缺口或预测跨度超过一天。"
             )
-        items.append(
-            _item(dish_id, latest["dish_name"], estimate, method, request.prep_buffer_percent)
+        item = _item(dish_id, latest["dish_name"], estimate, method, request.prep_buffer_percent)
+        item["algorithm"] = (
+            artifact["models"][dish_id].get("kind", "ridge") if method == "model" else "baseline"
         )
+        items.append(item)
     if any(item["method"] == "baseline" for item in items):
         warnings.append("基线菜品仅依据历史销量；天气、考试周和活动暂不影响这些菜品。")
     if any(item["method"] == "model" for item in items):
@@ -86,7 +91,7 @@ def predict(records, request, model_path: Path):
     return (
         items,
         list(dict.fromkeys(warnings)),
-        MODEL_VERSION
+        artifact["version"]
         if any(item["method"] == "model" for item in items)
         else "history-baseline-v1",
     )
