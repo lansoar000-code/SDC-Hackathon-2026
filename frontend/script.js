@@ -6,6 +6,23 @@ import { element, setStatus, sourceLabel } from "./js/ui.js";
 
 const query = (selector) => document.querySelector(selector);
 let dishes = [];
+let dataStatus = null;
+let pendingImport = false;
+let importing = false;
+let training = false;
+
+/** 文件选择、导入和训练是三个独立步骤；只按已保存的数据判断训练条件。 */
+function updateTrainingAvailability() {
+  const ready = dataStatus?.training.ready === true;
+  query("#train-button").disabled = !ready || pendingImport || importing || training;
+  let message;
+  if (importing) message = "正在导入文件，请等待导入完成。";
+  else if (pendingImport) message = "文件已选择，尚未导入。请先点击「Import / 导入」。";
+  else if (!dataStatus) message = "正在读取已保存的数据…";
+  else if (!ready) message = "已保存 " + dataStatus.sales.date_count + " 个日期；训练至少需要 " + dataStatus.training.minimum_dates + " 个日期。";
+  else message = "数据已就绪 · " + dataStatus.sales.date_count + " 个日期，可以训练并比较模型。";
+  setStatus("#data-readiness", message);
+}
 
 function localDate(value) {
   const offset = value.getTimezoneOffset() * 60000;
@@ -52,6 +69,8 @@ async function refreshDataStatus() {
   const [health, dishData] = await Promise.all([api("/health"), api("/dishes")]);
   dishes = dishData.items;
   const sales = health.sales;
+  dataStatus = health;
+  updateTrainingAvailability();
   setStatus("#service-status", "Connected / 已连接 · " + sales.count + " 条销量" +
     (sales.count ? " · " + sales.first_date + " — " + sales.last_date : " · 先导入历史数据或选择模拟模式"));
   const options = dishes.length
@@ -79,6 +98,7 @@ async function withBusy(button, status, action) {
     if (status === "#prediction-status") query("#result-source").textContent = "FAILED / 未生成";
   } finally {
     button.disabled = false;
+    updateTrainingAvailability();
   }
 }
 
@@ -106,26 +126,52 @@ query("#predict-button").addEventListener("click", () => {
   });
 });
 
+query("#sales-file").addEventListener("change", () => {
+  pendingImport = query("#sales-file").files.length > 0;
+  setStatus("#import-status", pendingImport ? "已选择文件，请点击「导入」保存到当前数据库。" : "");
+  updateTrainingAvailability();
+});
+
 query("#import-form").addEventListener("submit", (event) => {
   event.preventDefault();
   withBusy(query("#import-button"), "#import-status", async () => {
     const file = query("#sales-file").files[0];
     if (!file) throw new Error("请选择 CSV 或 XLSX 文件。");
-    if (file.size > 5 * 1024 * 1024) throw new Error("文件不能超过 5 MB。");
+    if (!dataStatus) throw new Error("尚未连接到数据服务，请刷新后重试。");
+    const limit = dataStatus.import_limits.max_upload_bytes;
+    if (file.size > limit) throw new Error("文件不能超过 " + limit / (1024 * 1024) + " MB。");
     const body = new FormData();
     body.append("file", file);
-    const result = await api("/data/import", { method: "POST", body });
-    setStatus("#import-status", result.message);
-    await refreshDataStatus();
-    await refreshMetrics();
+    importing = true;
+    query("#sales-file").disabled = true;
+    updateTrainingAvailability();
+    try {
+      const result = await api("/data/import", { method: "POST", body, timeout: 120000 });
+      pendingImport = false;
+      query("#sales-file").value = "";
+      setStatus("#import-status", result.message);
+      await refreshDataStatus();
+      await refreshMetrics();
+    } finally {
+      importing = false;
+      query("#sales-file").disabled = false;
+      updateTrainingAvailability();
+    }
   });
 });
 
 query("#train-button").addEventListener("click", () => {
   withBusy(query("#train-button"), "#training-status", async () => {
-    const result = await api("/models/train", { method: "POST", json: {}, timeout: 120000 });
-    showTrainingReport(result);
-    setStatus("#training-status", "模型比较完成 · 历史截止 " + result.trained_through);
+    training = true;
+    query("#import-button").disabled = true;
+    try {
+      const result = await api("/models/train", { method: "POST", json: {}, timeout: 120000 });
+      showTrainingReport(result);
+      setStatus("#training-status", "模型比较完成 · 历史截止 " + result.trained_through);
+    } finally {
+      training = false;
+      query("#import-button").disabled = false;
+    }
   });
 });
 
