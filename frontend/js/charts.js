@@ -24,8 +24,8 @@ export function showTrainingReport(artifact) {
   const target = document.querySelector("#training-report");
   target.replaceChildren(
     element("p", "训练截止 " + artifact.trained_through + "；验证起点 " + artifact.validation_from),
-    table(["菜品编号", "选择", "模型 MAE", "基线 MAE"], artifact.reports.map((row) => [
-      row.dish_id, row.selected, row.ridge?.mae, row.baseline?.mae,
+    table(["菜品编号", "选择", "XGBoost MAE", "Ridge MAE", "基线 MAE"], artifact.reports.map((row) => [
+      row.dish_id, row.selected, row.xgboost?.mae, row.ridge?.mae, row.baseline?.mae,
     ])),
     element("p", artifact.evaluation_note),
   );

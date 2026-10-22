@@ -23,6 +23,7 @@
 mode：auto/baseline/demo。weather：sunny/cloudy/rainy。备餐余量 0–50；布尔字段必须为 JSON true/false。
 结果包含 prediction_id、created_at、target_date、source、model_version、data_through、conditions、items、总销量、总备餐量和 warnings。
 每个 item 记录 dish_id、dish_name、predicted_sales_quantity、recommended_prep_quantity、method。
+历史模式的 item 另含 algorithm（baseline/ridge/xgboost）；method 仍区分 baseline/model。训练与状态响应含三个候选的验证分数，不返回模型本体。旧 ridge-v1 文件仍可读取；新模型版本为 demand-selection-v2。
 
 错误统一返回 error.message、可选 error.details。格式错误 400、缺历史或字段非法 422、重复记录/名称冲突 409、文件过大 413、找不到记录 404。
 基线不受天气/考试周/活动影响；混合结果 source=mixed，并逐菜品说明 method。

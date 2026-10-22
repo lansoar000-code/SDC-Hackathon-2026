@@ -53,7 +53,7 @@
       <form id="import-form" class="inline-form"><label>Sales history / 历史销量<input id="sales-file" type="file" accept=".csv,.xlsx" required /></label><button type="submit" id="import-button">Import / 导入</button></form>
       <p id="import-status" class="app-status" role="status"></p>
       <details><summary>CSV fields / 字段说明</summary><p>必填：date, dish_id, dish_name, sales_quantity。可选：prepared_quantity, waste_quantity, weather, is_exam_week, has_event。</p><p>日期 YYYY-MM-DD；数量为非负整数；天气 sunny/cloudy/rainy；布尔 true/false。缺失日期不自动当成零销量。</p></details>
-      <div class="training-actions"><button id="train-button" type="button">Train &amp; compare / 训练并比较</button><span>至少 21 个记录日期；模型不优于基线时保留基线。</span></div>
+      <div class="training-actions"><button id="train-button" type="button">Train &amp; compare / 训练并比较</button><span>至少 21 个记录日期；按同一时间段比较 XGBoost、Ridge 与历史基线。</span></div>
       <p id="training-status" class="app-status" role="status"></p><div id="training-report"></div>
     </section>
     <section class="workspace-card" aria-labelledby="actual-title">

@@ -24,7 +24,9 @@
 | forecasting/data.py | CSV/XLSX 解析与行号错误 |
 | forecasting/features.py | 训练/在线共用历史特征 |
 | forecasting/baseline.py | 同星期或近七次均值 |
-| forecasting/training.py | 标准化 Ridge、时间验证、择优、JSON 保存 |
+| forecasting/estimators.py | Ridge 与 XGBoost 的训练、JSON 读取和统一预测 |
+| forecasting/training.py | 同时间段比较三种候选、择优与保存 |
+| retrain_synthetic.py | 复用现有 80,000 行，单独保存 XGBoost 同段比较与新模型 |
 | forecasting/synthetic.py | 带种子的虚构食堂数据生成器 |
 | forecasting/synthetic_evaluation.py | 保留最后时间段的滚动单步评估 |
 | prepare_synthetic.py | 生成、整批校验、隔离入库、评估与最终训练 |
