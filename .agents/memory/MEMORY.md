@@ -1,0 +1,1 @@
+- [Replit Python installation](replit-python-installation.md) — the managed installer requires project metadata when pyproject.toml exists.
