@@ -34,7 +34,7 @@ function renderPrediction(result) {
     const quantities = element("div");
     quantities.append(
       element("div", item.recommended_prep_quantity + " 份备餐", "dish-quantity"),
-      element("div", "预测 " + item.predicted_sales_quantity + " 份 · " + sourceLabel(item.method), "change-label"),
+      element("div", "预测 " + item.predicted_sales_quantity + " 份 · " + (item.algorithm || sourceLabel(item.method)), "change-label"),
     );
     row.append(label, quantities);
     return row;
