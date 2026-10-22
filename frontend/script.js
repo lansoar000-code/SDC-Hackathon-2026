@@ -22,7 +22,8 @@ query("#actual-date").max = localDate(new Date());
 function renderPrediction(result) {
   query("#empty-state").hidden = true;
   query("#results-content").hidden = false;
-  query("#result-source").textContent = sourceLabel(result.source);
+  query("#result-source").textContent = sourceLabel(result.source) +
+    (result.data_origin === "synthetic" ? " · 合成数据" : "");
   query("#total-quantity").textContent = result.total_recommended_prep;
   query("#predicted-total").textContent = "Predicted sales / 预测销量：" + result.total_predicted_sales + " 份";
   query("#prediction-date").textContent = result.target_date + " · " + result.model_version;
