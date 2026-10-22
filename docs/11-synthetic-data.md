@@ -24,7 +24,7 @@
 | 文件 | 用途 |
 |---|---|
 | SYNTHETIC_sales_10000_days.csv | 全部菜品销量、备餐、浪费和可知条件 |
-| import_batches/ | 4 个文件，每个 20,000 行，符合网页导入上限 |
+| import_batches/ | 4 个文件，每个 20,000 行，可选分批导入；网页也支持整份 80,000 行 CSV |
 | splits/train.csv | 最早 7,000 天：训练 |
 | splits/validation.csv | 接下来 1,500 天：选择方法 |
 | splits/test.csv | 最后 1,500 天：独立时间留出 |
