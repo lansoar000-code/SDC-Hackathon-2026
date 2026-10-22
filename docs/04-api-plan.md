@@ -1,29 +1,31 @@
-# 前后端接口草案（尚未实现）
-接口路径先约定，明天实现时统一调整；今天这些网址不能调用。
+# 已实现接口
+运行后以 /docs 自动生成的 OpenAPI 页面为完整字段定义。
 
 | 方法 | 路径 | 作用 |
 |---|---|---|
-| GET | /api/health | 确认服务是否启动 |
-| GET | /api/dishes | 读取菜品清单 |
-| POST | /api/data/import | 上传历史 CSV，返回成功数和问题行 |
-| POST | /api/predictions | 提交日期及条件，生成菜品需求预测 |
-| GET | /api/predictions | 查询预测历史 |
-| GET | /api/predictions/{id} | 查看某次预测详情 |
-| POST | /api/sales | 录入实际销量（第二阶段） |
-| GET | /api/reports/metrics | 查询预测误差（第二阶段） |
+| GET | /api/health | 服务状态和销量日期范围 |
+| GET | /api/dishes | 已导入菜品清单 |
+| POST | /api/data/import | multipart 表单 file，CSV/XLSX；成功 201 |
+| POST | /api/sales | JSON records 数组，新增实际销量；成功 201 |
+| GET | /api/sales | 分页查看销量，limit 1–1000、offset ≥ 0 |
+| POST | /api/predictions | 创建并保存预测；成功 201 |
+| GET | /api/predictions | 分页历史，limit 1–100、offset ≥ 0 |
+| GET | /api/predictions/{id} | 保存的完整预测快照 |
+| GET | /api/predictions/{id}/export | CSV 导出；菜名防公式解释 |
+| POST | /api/models/train | JSON {} 或 cutoff_date；训练及验证比较 |
+| GET | /api/models/status | 模型状态和验证报告 |
+| GET | /api/reports/metrics | 实际/预测对齐，事前指标与历史补做分开 |
 
-## 预测请求字段
-target_date：预测日期；weather：天气类别；is_exam_week：布尔值；has_event：布尔值。
-餐厅位置和天气类别含义尚未定稿；前端和后端必须共用同一套取值。
+预测请求：
+```json
+{"target_date":"2026-10-23","weather":"sunny","is_exam_week":false,"has_event":false,"mode":"auto","prep_buffer_percent":0}
+```
+mode：auto/baseline/demo。weather：sunny/cloudy/rainy。备餐余量 0–50；布尔字段必须为 JSON true/false。
+结果包含 prediction_id、created_at、target_date、source、model_version、data_through、conditions、items、总销量、总备餐量和 warnings。
+每个 item 记录 dish_id、dish_name、predicted_sales_quantity、recommended_prep_quantity、method。
 
-## 预测返回字段
-prediction_id、target_date、source（demo/baseline/model）、model_version、items、total_predicted_sales、warnings。
-items 中包含 dish_id、dish_name、predicted_sales_quantity、recommended_prep_quantity。
-数量单位为份；备餐量可以根据业务规则调整，不能直接声称它就是预测销量。
-无历史数据时返回明确提示，不凭空生成真实预测；演示模式必须注明模拟。
+错误统一返回 error.message、可选 error.details。格式错误 400、缺历史或字段非法 422、重复记录/名称冲突 409、文件过大 413、找不到记录 404。
+基线不受天气/考试周/活动影响；混合结果 source=mixed，并逐菜品说明 method。
+同源页面与 API 一起由服务提供，无需配置跨域。
 
-## 错误处理
-日期非法、字段缺失、数据格式不符：指出具体问题。
-模型未准备好、数据不足：返回清楚的原因。
-前端显示错误信息并恢复按钮，不把失败显示为零需求。
 
