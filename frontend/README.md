@@ -1,5 +1,4 @@
 # frontend：板块说明
 
-用户界面：index.html 是页面结构，style.css 管外观，script.js 是现有模拟演示交互。js/api.js 预留后端请求；js/history.js 和 js/charts.js 预留历史记录与图表。新 JS 文件尚未接入 HTML。现有脚本明天再按职责逐步拆分，避免今天改变演示行为。
+页面已连接真实后端。script.js 负责事件，js/api.js 请求，history.js 历史，charts.js 图表，ui.js 文本节点。通过 run.py 后访问页面，不直接双击 HTML。
 
-更多：[完整文件地图](../docs/02-file-map.md)。

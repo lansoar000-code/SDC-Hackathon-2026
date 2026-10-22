@@ -1,5 +1,4 @@
 # frontend/js：板块说明
 
-预留前端模块：api.js 负责请求，history.js 负责历史记录，charts.js 负责图表。今天只有注释；它们还未被页面加载。
+已实现模块：api.js 统一请求，history.js 读取分页记录，charts.js 展示训练和反馈对比，ui.js 共用文本与状态工具。用户提供的菜名使用 textContent 展示。
 
-更多：[完整文件地图](../../docs/02-file-map.md)。
