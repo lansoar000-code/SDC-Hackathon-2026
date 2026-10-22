@@ -206,6 +206,12 @@ class WorkflowTests(unittest.TestCase):
         self.assertTrue(report["comparisons"][0]["retrospective"])
         self.assertFalse(report["prospective_comparisons"][0]["retrospective"])
 
+    def test_synthetic_records_are_explicitly_labelled(self):
+        self.save([self.row(dish_id="synth_rice", name="[SYNTHETIC] Rice")])
+        result = self.predict().json()
+        self.assertEqual(result["data_origin"], "synthetic")
+        self.assertIn("合成食堂数据", " ".join(result["warnings"]))
+
 
 class ForecastingTests(unittest.TestCase):
     def test_feature_isolation_calendar_gaps_and_future_perturbation(self):

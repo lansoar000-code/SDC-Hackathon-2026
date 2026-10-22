@@ -16,6 +16,9 @@ def create_prediction(settings, request):
         methods = {item["method"] for item in items}
         source = next(iter(methods)) if len(methods) == 1 else "mixed"
         result = {
+            "data_origin": "synthetic"
+            if source == "demo" or any(row["dish_id"].startswith("synth_") for row in history)
+            else "imported",
             "prediction_id": uuid4().hex,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "target_date": request.target_date.isoformat(),

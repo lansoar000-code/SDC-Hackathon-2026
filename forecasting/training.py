@@ -49,12 +49,14 @@ def apply_ridge(model, vector):
     return max(0.0, float(np.dot(np.r_[1.0, standardized], model["coefficients"])))
 
 
-def train_models(records, output_path: Path):
+def train_models(records, output_path: Path, *, validation_start: str | None = None):
     """末段 20% 日期作滚动单步验证；模型选择后用全量历史重训。"""
     dates = sorted({str(row["date"]) for row in records})
     if len(dates) < 21:
         raise AppError("训练至少需要 21 个有销量记录的日期；数据不足时仍可使用基线预测", 422)
-    split_date = dates[int(len(dates) * 0.8)]
+    split_date = validation_start or dates[int(len(dates) * 0.8)]
+    if split_date not in dates or split_date <= dates[0]:
+        raise AppError("验证起点必须是已有日期，且晚于首个历史日期", 422)
     models, reports = {}, []
     history_index = HistoryIndex(records)
     for dish_id in sorted({row["dish_id"] for row in records}):
@@ -95,6 +97,9 @@ def train_models(records, output_path: Path):
             }
         )
     artifact = {
+        "data_origin": "synthetic"
+        if all(row["dish_id"].startswith("synth_") for row in records)
+        else "imported",
         "version": MODEL_VERSION,
         "feature_names": FEATURE_NAMES,
         "trained_at": datetime.now(timezone.utc).isoformat(),

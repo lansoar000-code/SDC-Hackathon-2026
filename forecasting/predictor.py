@@ -45,6 +45,10 @@ def predict(records, request, model_path: Path):
     history = [row for row in records if as_date(row["date"]) < request.target_date]
     if not history:
         raise AppError("目标日期之前没有历史销量，请先导入数据，或选择模拟演示", 422)
+    if any(row["dish_id"].startswith("synth_") for row in history):
+        warnings.append(
+            "包含明确标识的合成食堂数据；预测与评估只反映模拟场景，不代表真实餐厅效果。"
+        )
     artifact = load_artifact(model_path) if request.mode == "auto" else None
     if artifact:
         # 新增或修改历史数据后，旧模型不能悄悄继续声称是最新训练版本。

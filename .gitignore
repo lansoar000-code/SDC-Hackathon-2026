@@ -220,6 +220,10 @@ __marimo__/
 .streamlit/secrets.toml
 
 # PrepWise local environment, business data and generated artifacts
+.artifact/
+data/synthetic/
+models/synthetic/
+outputs/
 .venv/
 .runtime/
 __pycache__/
