@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="app.css" />
   <script src="script.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <div class="page-shell">
@@ -67,10 +68,36 @@
       </form><p id="actual-status" class="app-status" role="status"></p>
     </section>
     <section class="workspace-card" aria-labelledby="history-title"><div class="workspace-heading"><h2 id="history-title">Forecast history / 预测记录</h2><button id="refresh-history" type="button">Refresh / 刷新</button></div><p id="history-status" class="app-status" role="status"></p><div id="history-list" class="history-list"></div><button id="more-history" type="button" hidden>Load more / 加载更多</button></section>
-    <section class="workspace-card" aria-labelledby="metrics-title"><div class="workspace-heading"><h2 id="metrics-title">Forecast comparison / 效果对比</h2><button id="refresh-metrics" type="button">Refresh / 刷新</button></div><p id="metrics-status" class="app-status" role="status"></p><div id="metrics-summary"></div><div id="comparison-chart"></div></section>
-    <footer class="page-footer"><span>PREPWISE · KITCHEN PLANNING</span><a class="text-link" href="/docs">API documentation</a></footer>
-  </main>
-</div>
-</body>
+    <section class="workspace-card" aria-labelledby="metrics-title"><div class="workspace-heading"><h2 id="metrics-title">Forecast comparison / 效果对比</h2><button id="refresh-metrics" type="button">Refresh / 刷新</button></div><p id="metrics-status" class="app-status" role="status"></p><div id="metrics-summary"></div><div id="comparison-chart">
+  <div class="chart-wrap">
+    <h3>历史销量 vs 预测销量（时间趋势）</h3>
+    <canvas id="sales-line-chart"></canvas>
+  </div>
+</div></section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script>
+let salesLineChart = null;
+
+function renderSalesLineChart() {
+  const ctx = document.getElementById('sales-line-chart');
+  if (!ctx) return;
+  if(salesLineChart) salesLineChart.destroy();
+
+  salesLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ["10-01","10-02","10-03","10-04","10-05","10-06","10-07"],
+      datasets: [
+        {label:"实际销量", data:[120,132,101,134,90,230,210], borderColor:"#2563eb", tension:0.2},
+        {label:"预测销量", data:[125,128,110,130,95,220,215], borderColor:"#f97316", tension:0.2}
+      ]
+    },
+    options:{responsive:true}
+  });
+}
+
+document.querySelector('#refresh-metrics')?.addEventListener('click', renderSalesLineChart);
+</script>
+</script></body>
 </html>
 
