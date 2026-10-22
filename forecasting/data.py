@@ -18,7 +18,7 @@ REQUIRED_COLUMNS = {"date", "dish_id", "dish_name", "sales_quantity"}
 OPTIONAL_COLUMNS = {"prepared_quantity", "waste_quantity", "weather", "is_exam_week", "has_event"}
 
 
-def read_table(content: bytes, filename: str, max_rows: int = 20000) -> list[SaleRecord]:
+def read_table(content: bytes, filename: str, max_rows: int = 100000) -> list[SaleRecord]:
     """支持 UTF-8 CSV 与第一张工作表 XLSX；返回全部合法记录或整批报错。"""
     suffix = Path(filename).suffix.lower()
     try:

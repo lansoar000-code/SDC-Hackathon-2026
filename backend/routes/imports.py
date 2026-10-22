@@ -15,7 +15,8 @@ async def import_sales(file: UploadFile, settings=Depends(get_settings)):
     try:
         content = await file.read(settings.max_upload_bytes + 1)
         if len(content) > settings.max_upload_bytes:
-            raise AppError("文件不能超过 5 MB", 413)
+            limit_mb = settings.max_upload_bytes / (1024 * 1024)
+            raise AppError(f"文件不能超过 {limit_mb:g} MB", 413)
         return await run_in_threadpool(import_file, settings, content, file.filename or "")
     finally:
         await file.close()

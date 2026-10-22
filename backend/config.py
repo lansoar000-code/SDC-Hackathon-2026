@@ -27,5 +27,5 @@ class Settings:
         )
     )
     frontend_path: Path = PROJECT_ROOT / "frontend"
-    max_upload_bytes: int = 5 * 1024 * 1024
-    max_import_rows: int = 20000
+    max_upload_bytes: int = 16 * 1024 * 1024
+    max_import_rows: int = 100000
