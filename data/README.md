@@ -1,4 +1,6 @@
-# data：板块说明
+# Runtime and generated data
+The default server creates `prepwise.sqlite3` here. Uploaded rows are stored in SQLite; the uploaded source file is not automatically archived.
 
-服务会在这里创建 prepwise.sqlite3；raw 是原始数据，processed 是独立脚本输出，predictions 是独立预测 CSV。上传数据仅保存到本地 SQLite，不自动保存上传原件。原始文件由用户保留。
+Local generation may create `raw/`, `processed/`, `predictions/` and `synthetic/` folders. Preserve source files and generation manifests. Do not commit live databases, credentials, private data or the audit oracle as model input.
 
+For this competition, use team-created labelled synthetic records only. See [Data and models](../docs/DATA_AND_MODELS.md). Durable cloud storage and backup/restore verification are still required before claiming production persistence.

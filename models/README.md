@@ -1,4 +1,4 @@
-# models：板块说明
+# Model artifacts
+Training saves `forecast.json` with model type/parameters, feature order, training cutoff, history fingerprint and validation reports. XGBoost is stored in its native JSON format; legacy Ridge JSON remains readable.
 
-训练后自动保存 forecast.json，包含模型系数、标准化参数、字段顺序、训练截止日期、数据指纹和按时间验证报告。文件不提交；没有模型时自动模式使用历史基线。
-
+Model artifacts are generated locally and are not committed. Without a usable matching model, automatic mode uses a labelled historical baseline. See [Data and models](../docs/DATA_AND_MODELS.md) for reproducibility and evaluation limits. Persist models alongside a compatible data snapshot in a real cloud deployment.

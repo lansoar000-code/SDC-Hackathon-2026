@@ -1,29 +1,23 @@
 # PrepWise on Replit
+## Runtime
+Python 3.12, FastAPI/Uvicorn, plain HTML/CSS/JavaScript and SQLite. No separate frontend build or remote inference key is needed.
 
-## Run
+Use Start application for development. It runs `python -m uvicorn backend.main:app --host 0.0.0.0 --port 5000`. The internal port is 5000 and the external port is 80. The local `python run.py` launcher uses loopback port 8000 and is not a production startup command.
 
-- Python 3.12; existing FastAPI backend, plain HTML/CSS/JavaScript frontend, and SQLite.
-- Use the **Start application** workflow (or the Run button). It runs
-  `python -m uvicorn backend.main:app --host 0.0.0.0 --port 5000`.
-- Open Preview for the app; `/docs` contains the API documentation.
-- No API keys or external services are required.
-- The original `python run.py` entry point remains unchanged for local use.
+The production configuration must contain one deployment section with an explicit server run command and no conflicting nested run table. The user corrected this in Replit before publishing. Synchronization of that exact configuration back to GitHub remains unverified; do not overwrite it with an older import or merge.
 
-## Data and access
+## Published application
+[Open the public website](https://sdc-hackathon-2026--lansoar000.replit.app). It is hosted in the cloud and does not require a local computer or a temporary Cloudflare tunnel to run. The free deployment has an expiry; check the publishing panel for the current date/plan. A successful deployment does not imply permanent free hosting.
 
-- SQLite is initialized automatically at `data/prepwise.sqlite3`.
-- Trained models are stored at `models/forecast.json`.
-- Start with the explicitly labeled simulation mode, or upload your own sales
-  CSV/XLSX. Training requires at least 21 recorded dates.
-- Do not generate synthetic records in the main database automatically.
-- This is a single-restaurant app without authentication. Do not expose real
-  business data to untrusted users. Public production use needs access protection
-  and a durable storage/backup plan for the local database and model files.
+## Data and models
+SQLite defaults to `data/prepwise.sqlite3`; models default to `models/forecast.json`. Paths can be configured with `PREPWISE_DATABASE` and `PREPWISE_MODEL`, but changing a path does not create durable storage.
 
-## Checks
+The competition site must contain only team-created synthetic records. Do not silently seed the main database, overwrite existing data or run a large synthetic training task during server startup. On 2026-10-24, the published service reported 0 saved sales and no trained model. Import reviewed synthetic history explicitly and verify model mode for the demo.
 
-- `python -m unittest discover -s tests -v`
-- `ruff check backend forecasting tests run.py`
-- `ruff format --check backend forecasting tests run.py`
+The app has no authentication. Cloud persistence, backup/restore and approval/role controls are open items, not implemented safeguards.
 
-Keep the imported structure and stack; setup does not require a frontend build.
+## Repository alignment
+The English redesign is in frontend PR #1, which was still unmerged at the documentation audit. Match the submitted revision with the live frontend and production startup fix before submission. A local supply handoff must not be described as a deployed inventory capability.
+
+## Development guidance
+Keep the existing application stack and API contracts. Use the managed dependency metadata/lockfiles consistently and do not remove the project metadata required by the Replit Python installer. Never commit keys or private data. See [README](README.md), [API](docs/API.md) and [competition readiness](docs/COMPETITION_READINESS.md).

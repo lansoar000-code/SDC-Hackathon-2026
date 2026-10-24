@@ -1,4 +1,14 @@
-# docs：板块说明
+# Documentation
+Read [the project README](../README.md) first.
 
-先读根 README 的运行方式，再读 09-code-reading.md。01、05、06、08 保留目标、数据原则与分工历史；07 是昨日开发顺序，实际进度以 10-implementation.md 为准。
+| Document | Purpose |
+| --- | --- |
+| [Architecture](ARCHITECTURE.md) | Current components, request flow, code responsibilities and Orbyte integration boundary |
+| [API](API.md) | Implemented routes, inputs, outputs and error behavior |
+| [Data and models](DATA_AND_MODELS.md) | Synthetic data provenance, reproducible generation, features and evaluation caveats |
+| [Validation](VALIDATION.md) | What has actually been checked, and what remains unverified |
+| [Competition readiness](COMPETITION_READINESS.md) | Official sources, preliminary requirements, priorities and unresolved work |
+| [Resource declaration](RESOURCE_DECLARATION.md) | Libraries, hosting, AI assistance, assets and declaration gaps |
+| [Submission checklist](../submission/README.md) | Required PDFs, naming and completion status |
 
+Earlier day-by-day plans, duplicated folder descriptions and stale implementation snapshots have been consolidated here. Their history remains recoverable in Git. Source code, tests, license and dependency/configuration files are outside this documentation cleanup.
