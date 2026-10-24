@@ -13,7 +13,7 @@ export function createHistory(onSelect) {
     if (busy) return;
     busy = true;
     refreshButton.disabled = moreButton.disabled = true;
-    setStatus("#history-status", "Loading / 读取中…");
+    setStatus("#history-status", "Loading…");
     try {
       const start = reset ? 0 : offset;
       const result = await api("/predictions?limit=20&offset=" + start);
@@ -21,15 +21,15 @@ export function createHistory(onSelect) {
       for (const record of result.items) {
         const row = element("div", "", "history-row");
         const label = element("span", record.target_date + " · " + sourceLabel(record.source) +
-          " · " + record.total_predicted_sales + " 份预测 / " + record.total_recommended_prep + " 份备餐");
-        const button = element("button", "View / 查看");
+          " · " + record.total_predicted_sales + " forecast / " + record.total_recommended_prep + " prep");
+        const button = element("button", "View");
         button.type = "button";
         button.addEventListener("click", async () => {
           button.disabled = true;
           try {
             const detail = await api("/predictions/" + encodeURIComponent(record.prediction_id));
             onSelect(detail);
-            setStatus("#prediction-status", "历史记录 · 保存时间 " + detail.created_at);
+            setStatus("#prediction-status", "Saved forecast · Created " + detail.created_at);
             document.querySelector("#results-title").scrollIntoView({ behavior: "smooth" });
           } catch (error) {
             setStatus("#history-status", describeError(error), true);
@@ -42,7 +42,7 @@ export function createHistory(onSelect) {
       }
       offset = start + result.items.length;
       moreButton.hidden = result.items.length < 20;
-      setStatus("#history-status", offset ? "已显示 " + offset + " 条保存记录；包含单独标识的模拟结果。" : "还没有预测记录。");
+      setStatus("#history-status", offset ? "Showing " + offset + " saved forecasts, including labelled demo results." : "No forecasts saved yet.");
     } catch (error) {
       setStatus("#history-status", describeError(error), true);
     } finally {
@@ -54,4 +54,5 @@ export function createHistory(onSelect) {
   moreButton.addEventListener("click", () => load(false));
   return { refresh: () => load(true) };
 }
+
 
