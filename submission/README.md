@@ -4,7 +4,7 @@ Team: 牛马来西亚. Project: PrepWise. Status checked on 25 October 2026 (MYT
 | Material | Status |
 | --- | --- |
 | Preliminary proposal PDF | [Final team-approved PDF](SDC2026_牛马来西亚_Preliminary.pdf), uploaded unchanged |
-| Technology / AI declaration | [Prepared English declaration](SDC2026_牛马来西亚_TechDeclaration.pdf); leader-signed PDF uploaded unchanged; checklist boxes remain unmarked |
+| Technology / AI declaration | [Prepared English declaration](SDC2026_牛马来西亚_TechDeclaration.pdf); leader-signed PDF uploaded unchanged; items 1, 4, 5, 6 and 7 checked; items 2 (licenses/attribution) and 3 (credentials) remain unchecked |
 | Replit proof of use | [Completed with actual public screenshots](SDC2026_牛马来西亚_Replit_POU.pdf) |
 | RunPod proof of use | Not available; the team confirms no RunPod use |
 | Pitch deck | [Final PPTX](https://docs.google.com/presentation/d/1vcyDAXWv9w9mDHFz-JKE3pWYl4U1rePp/edit); anyone with the link can view |
