@@ -18,7 +18,7 @@ Demand forecasting and meal preparation planning for small Malaysian restaurants
 - [Pitch deck upload](https://docs.google.com/presentation/d/1vcyDAXWv9w9mDHFz-JKE3pWYl4U1rePp/edit): uploaded to the team's Drive; anyone with the link can view.
 - [Demo video](https://drive.google.com/file/d/1JNB7649TAayQP9EpgzflGmFhdiUSBBDp/view): complete 6:05.4 recording, 1080p upload copy (54,081,075 bytes); anyone with the link can view. Original audio retained. Drive preview processing may take additional time.
 - [Final preliminary proposal](submission/SDC2026_牛马来西亚_Preliminary.pdf): team-approved PDF uploaded unchanged.
-- [Technology / AI use declaration](submission/SDC2026_牛马来西亚_TechDeclaration.pdf): English document prepared against the official template; leader checklist review and signature pending.
+- [Technology / AI use declaration](submission/SDC2026_牛马来西亚_TechDeclaration.pdf): Leader-signed PDF uploaded unchanged. Checklist boxes remain unmarked and the source retains its original unsigned-copy header.
 - RunPod: the team confirms it has not been used. No RunPod proof or API integration is claimed.
 
 This repository is being prepared for submission. The official portal requires a public repository and a sponsor-integration confirmation. The repository is public; qualifying sponsor use must still be resolved before formal submission. A submitted/successful status is not claimed here.
