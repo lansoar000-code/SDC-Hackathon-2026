@@ -4,6 +4,7 @@ import { createHistory } from "./js/history.js";
 import { refreshMetrics, showTrainingReport } from "./js/charts.js";
 import { element, setStatus, sourceLabel } from "./js/ui.js";
 import { englishMessage, dishLabel } from "./js/language.js";
+import "./js/plan-reviews.js";
 
 const query = (selector) => document.querySelector(selector);
 let dishes = [];
@@ -38,6 +39,7 @@ query("#actual-date").max = localDate(new Date());
 
 /** 所有外部文本通过 textContent 写入，菜名不会被当成 HTML。 */
 function renderPrediction(result) {
+  document.dispatchEvent(new CustomEvent("prepwise:prediction", { detail: result }));
   query("#empty-state").hidden = true;
   query("#results-content").hidden = false;
   query("#result-source").textContent = sourceLabel(result.source) +
