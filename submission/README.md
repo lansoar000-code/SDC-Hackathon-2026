@@ -3,7 +3,7 @@ Team: 牛马来西亚. Project: PrepWise. Status checked on 25 October 2026 (MYT
 
 | Material | Status |
 | --- | --- |
-| Preliminary proposal PDF | Not finished; team facts and declarations require confirmation |
+| Preliminary proposal PDF | [Final team-approved PDF](SDC2026_牛马来西亚_Preliminary.pdf), uploaded unchanged |
 | Technology / AI declaration | Not finished; leader review and signature required |
 | Replit proof of use | [Completed with actual public screenshots](SDC2026_牛马来西亚_Replit_POU.pdf) |
 | RunPod proof of use | Not available; the team confirms no RunPod use |

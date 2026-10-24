@@ -17,10 +17,11 @@ Demand forecasting and meal preparation planning for small Malaysian restaurants
 - [Replit proof of use](submission/SDC2026_牛马来西亚_Replit_POU.pdf)
 - [Pitch deck upload](https://docs.google.com/presentation/d/1vcyDAXWv9w9mDHFz-JKE3pWYl4U1rePp/edit): uploaded to the team's Drive; anyone with the link can view.
 - [Demo video](https://drive.google.com/file/d/1JNB7649TAayQP9EpgzflGmFhdiUSBBDp/view): complete 6:05.4 recording, 1080p upload copy (54,081,075 bytes); anyone with the link can view. Original audio retained. Drive preview processing may take additional time.
-- Preliminary proposal and signed technology/AI declaration: not yet complete.
+- [Final preliminary proposal](submission/SDC2026_牛马来西亚_Preliminary.pdf): team-approved PDF uploaded unchanged.
+- Signed technology/AI declaration: not yet complete.
 - RunPod: the team confirms it has not been used. No RunPod proof or API integration is claimed.
 
-This repository is being prepared for submission. The official portal requires a public repository and a sponsor-integration confirmation. Repository visibility and qualifying sponsor use must be resolved before formal submission. A submitted/successful status is not claimed here.
+This repository is being prepared for submission. The official portal requires a public repository and a sponsor-integration confirmation. The repository is public; qualifying sponsor use must still be resolved before formal submission. A submitted/successful status is not claimed here.
 
 ## What the prototype does
 Restaurant operators import daily dish sales, request a forecast and choose a preparation buffer. The service compares a historical baseline, Ridge regression and XGBoost when sufficient historical data is available. A separate, explicitly labelled fixed-rule demo is available.
