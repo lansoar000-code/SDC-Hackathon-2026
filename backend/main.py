@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from backend.config import Settings
 from backend.database import initialize
 from backend.errors import AppError
-from backend.routes import dishes, health, imports, predictions, reports, sales
+from backend.routes import dishes, health, imports, plan_reviews, predictions, reports, sales
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +22,7 @@ def create_app(settings: Settings | None = None):
     @asynccontextmanager
     async def lifespan(app):
         initialize(settings.database_path)
+        plan_reviews.initialize_reviews(settings.database_path)
         yield
 
     app = FastAPI(title="PrepWise", version="1.0.0", lifespan=lifespan)
@@ -54,9 +55,12 @@ def create_app(settings: Settings | None = None):
     for module in (health, dishes, imports, predictions, sales, reports):
         app.include_router(module.router, prefix="/api")
 
+    app.include_router(plan_reviews.router, prefix="/api")
+
     # API 路由优先，剩余路径才交给前端；数据库和模型目录不会被公开。
     app.mount("/", StaticFiles(directory=settings.frontend_path, html=True), name="frontend")
     return app
 
 
 app = create_app()
+
