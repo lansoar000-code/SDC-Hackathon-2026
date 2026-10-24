@@ -1,9 +1,11 @@
+import { englishMessage } from "./language.js";
+export const apiUrl = (path) => "/api" + path;
 /** 同源 API 客户端：统一超时、JSON 与错误处理。 */
 export async function api(path, { method = "GET", json, body, timeout = 30000 } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
-    const response = await fetch("/api" + path, {
+    const response = await fetch(apiUrl(path), {
       method,
       headers: json === undefined ? {} : { "Content-Type": "application/json" },
       body: json === undefined ? body : JSON.stringify(json),
@@ -11,15 +13,15 @@ export async function api(path, { method = "GET", json, body, timeout = 30000 } 
     });
     const data = await response.json().catch(() => null);
     if (!response.ok) {
-      const error = new Error(data?.error?.message || "请求失败，HTTP " + response.status);
+      const error = new Error(englishMessage(data?.error?.message) || "Request failed. HTTP " + response.status);
       error.details = data?.error?.details;
       throw error;
     }
-    if (data === null) throw new Error("服务返回了无法读取的响应。");
+    if (data === null) throw new Error("The service returned an unreadable response.");
     return data;
   } catch (error) {
-    if (error.name === "AbortError") throw new Error("请求超时；操作可能仍在服务端处理，请先刷新确认结果后再重试。");
-    if (error instanceof TypeError) throw new Error("无法连接服务，请确认 run.py 正在运行。");
+    if (error.name === "AbortError") throw new Error("The request timed out. It may still be processing; refresh before trying again.");
+    if (error instanceof TypeError) throw new Error("Cannot connect to the service. Check that the server is running.");
     throw error;
   } finally {
     clearTimeout(timer);
@@ -27,8 +29,9 @@ export async function api(path, { method = "GET", json, body, timeout = 30000 } 
 }
 
 export function describeError(error) {
-  let message = error.message || "操作失败";
-  if (error.details) message += "\n" + JSON.stringify(error.details, null, 2);
+  let message = error.message || "The operation failed.";
+  if (error.details) message += "\n" + JSON.stringify(error.details, (key, value) => typeof value === "string" ? englishMessage(value) : value, 2);
   return message;
 }
+
 

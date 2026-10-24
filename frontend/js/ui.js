@@ -13,5 +13,6 @@ export function setStatus(selector, message, error = false) {
 }
 
 export function sourceLabel(source) {
-  return ({ demo: "SIMULATED / 模拟", baseline: "BASELINE / 历史基线", model: "MODEL / 训练模型", mixed: "MIXED / 模型与基线" })[source] || source;
+  return ({ demo: "SIMULATED", baseline: "BASELINE", model: "MODEL", mixed: "MIXED" })[source] || source;
 }
+
