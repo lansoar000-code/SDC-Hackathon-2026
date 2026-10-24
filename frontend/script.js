@@ -4,7 +4,7 @@ import { createHistory } from "./js/history.js";
 import { refreshMetrics, showTrainingReport } from "./js/charts.js";
 import { element, setStatus, sourceLabel } from "./js/ui.js";
 import { englishMessage, dishLabel } from "./js/language.js";
-import "./js/plan-reviews.js";
+import "./js/plan-reviews.js?v=approval-20261024-2";
 
 const query = (selector) => document.querySelector(selector);
 let dishes = [];
