@@ -16,7 +16,7 @@ Demand forecasting and meal preparation planning for small Malaysian restaurants
 - [Replit project](https://replit.com/@lansoar000/SDC-Hackathon-2026)
 - [Replit proof of use](submission/SDC2026_牛马来西亚_Replit_POU.pdf)
 - [Pitch deck upload](https://docs.google.com/presentation/d/1vcyDAXWv9w9mDHFz-JKE3pWYl4U1rePp/edit): uploaded to the team's Drive; anyone with the link can view.
-- Demo video: the final 6 minute 5 second recording exists locally; upload is pending.
+- [Demo video](https://drive.google.com/file/d/1JNB7649TAayQP9EpgzflGmFhdiUSBBDp/view): complete 6:05.4 recording, 1080p upload copy (54,081,075 bytes); anyone with the link can view. Original audio retained. Drive preview processing may take additional time.
 - Preliminary proposal and signed technology/AI declaration: not yet complete.
 - RunPod: the team confirms it has not been used. No RunPod proof or API integration is claimed.
 
