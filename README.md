@@ -1,105 +1,94 @@
 # PrepWise
-Demand forecasting and preparation planning for small Malaysian restaurants.
+Demand forecasting and meal preparation planning for small Malaysian restaurants.
 
 ## Team and competition
-| Field | Status |
-| --- | --- |
-| Registered team name | 牛马来西亚 |
-| Project | PrepWise |
-| Assigned domain | Domain 2 - Orbyte Smart SME Challenge |
-| Primary SDG | SDG 8, targets 8.2 and 8.3 |
-| Supporting SDG | SDG 12, target 12.3; waste reduction remains a hypothesis to measure |
-| Leader, member names, institutions and contributions | Team confirmation required before submission |
+- Registered team: 牛马来西亚
+- Domain 2: Orbyte Smart SME Challenge
+- Institution: Xiamen University Malaysia
+- Team leader: Lan Dongao
+- Members: Shi Jiahuan, Cui Liuyang, Chen Yan and Wei Shangao
+- Primary SDG: 8.2 and 8.3. Supporting target: 12.3.
+- Individual contributions and declarations still require team confirmation.
 
-The registered team name is retained exactly; an official English team name has not been confirmed. Do not publish private contact details without the relevant member's consent.
+## Application and submission materials
+- [Live application](https://sdc-hackathon-2026--lansoar000.replit.app/)
+- [Live API documentation](https://sdc-hackathon-2026--lansoar000.replit.app/docs)
+- [Replit project](https://replit.com/@lansoar000/SDC-Hackathon-2026)
+- [Replit proof of use](submission/SDC2026_牛马来西亚_Replit_POU.pdf)
+- [Pitch deck upload](https://docs.google.com/presentation/d/1vcyDAXWv9w9mDHFz-JKE3pWYl4U1rePp/edit): uploaded to the team's Drive; public viewing is still being configured.
+- Demo video: the final 6 minute 5 second recording exists locally; upload is pending.
+- Preliminary proposal and signed technology/AI declaration: not yet complete.
+- RunPod: the team confirms it has not been used. No RunPod proof or API integration is claimed.
 
-## Links
-- [Live application](https://sdc-hackathon-2026--lansoar000.replit.app)
-- [GitHub repository](https://github.com/lansoar000-code/SDC-Hackathon-2026)
-- [API documentation](https://sdc-hackathon-2026--lansoar000.replit.app/docs)
-- [Submission files and naming](submission/README.md)
-- [Competition readiness and remaining work](docs/COMPETITION_READINESS.md)
-- Pitch deck and demo video: not completed or linked.
-- RunPod endpoint and proof of use: not implemented or evidenced in the audited repository.
+This repository is being prepared for submission. The official portal requires a public repository and a sponsor-integration confirmation. Repository visibility and qualifying sponsor use must be resolved before formal submission. A submitted/successful status is not claimed here.
 
-**Release alignment is still open.** The live site displays the English redesign, but [frontend PR #1](https://github.com/lansoar000-code/SDC-Hackathon-2026/pull/1) is unmerged. This documentation cleanup does not merge application code or deployment settings. Reconcile the final code revision with the live demonstration before submission.
+## What the prototype does
+Restaurant operators import daily dish sales, request a forecast and choose a preparation buffer. The service compares a historical baseline, Ridge regression and XGBoost when sufficient historical data is available. A separate, explicitly labelled fixed-rule demo is available.
 
-## Problem and approach
-Small restaurants often estimate tomorrow's portions manually from spreadsheets and recent experience. PrepWise imports daily dish sales, forecasts the next service and applies a user-selected preparation buffer. The intended benefit is more consistent planning with fewer manual steps; measured time savings and food-waste reduction have not yet been established.
+The operator can approve a saved plan using one button. The server stores a separate final plan, approval time, revision and activity events without overwriting the original prediction. The existing download link exports the approved quantities. The current interface supplies a simulated owner identity: this is not secure authentication, genuine role separation or isolation between businesses.
 
-The implemented journey is sales import -> validated history -> forecast -> suggested preparation -> saved snapshot -> sales feedback. A role-specific human approval step before releasing a final plan is **not implemented**. Prediction history is available, but it is not a role-aware approval/audit log.
-
-The Domain 2 brief calls for an Orbyte-compatible automation product. A future connector could receive synthetic sales events and return an approval-ready prep plan to an SME hub. No live Orbyte connection is claimed or required by the brief.
+A future Orbyte connector could receive a restaurant's sales context, request a forecast and return an approved plan with its activity record. Live Orbyte integration is not implemented.
 
 ## Implemented capabilities
-- Atomic UTF-8 CSV / first-sheet XLSX import with validation and duplicate rejection.
-- Explicit simulation, historical baseline, and per-dish model selection among baseline, Ridge and XGBoost.
-- Date, weather, exam-week, event and 0-50% prep-buffer inputs; historical baseline does not apply invented condition multipliers.
-- Separate forecast and preparation quantities, saved snapshots, history and CSV export.
-- Actual-sales feedback and MAE, WAPE and signed bias, separating retrospective comparisons from advance forecasts.
-- Reproducible, labelled synthetic data and temporal evaluation.
+- Validated CSV/XLSX sales import, with atomic rejection of invalid batches and duplicate date/dish combinations.
+- Historical baseline, Ridge and XGBoost with temporal validation and per-dish selection.
+- Explicit demo mode, user-selected 0-50% preparation buffer, and separate forecast/preparation quantities.
+- Saved forecasts, history and CSV exports.
+- Persisted simulated approval, immutable approved plans and application activity records.
+- Actual-sales feedback and MAE, WAPE and signed bias with date/dish matching.
+- Reproducible team-created synthetic data generation and offline evaluation.
 
-## Technology
-| Layer | Actual implementation |
+## Replit verification
+On 25 October 2026 at approximately 01:10-01:12 MYT:
+- Replit publishing status was success and the public health endpoint returned HTTP 200 / status ok.
+- The public interface generated a clearly labelled synthetic forecast of 226 servings.
+- The Approve plan button was observed and used; Approved and a saved timestamp appeared.
+- A read-only API check confirmed submitted and approved activity events with simulated identity.
+
+At that check, the deployed service reported zero saved sales dates and no trained model. The captured demonstration is fixed-rule synthetic output, not a live trained-model evaluation. The database has contained data at earlier points; durability across restart/republish is not established. Food-waste reduction, planning-time savings and real restaurant profit improvements have not been measured.
+
+## Technology and external resources
+| Layer | Implementation |
 | --- | --- |
-| Frontend | HTML, CSS, JavaScript modules |
-| Backend | Python 3.12, FastAPI, Uvicorn |
+| Frontend | HTML, CSS and JavaScript modules |
+| Backend | Python 3.12, FastAPI, Uvicorn and Pydantic |
 | Storage | SQLite and JSON model artifacts |
-| Forecasting | NumPy Ridge, XGBoost and historical baseline, CPU |
-| Hosting | Replit; no local computer or Cloudflare tunnel needed for the published URL |
-| Development assistance | OpenAI ChatGPT/Codex and Replit Agent; see [resource declaration](docs/RESOURCE_DECLARATION.md) |
+| Forecasting | NumPy Ridge, XGBoost and historical baseline; CPU execution |
+| Hosting | Replit |
+| Development assistance | ChatGPT/Codex and Replit Agent |
+
+See [resource inventory](docs/RESOURCE_DECLARATION.md), [approval scope](docs/PLAN_APPROVAL.md), [data and models](docs/DATA_AND_MODELS.md), and [architecture](docs/ARCHITECTURE.md). Older audit documents are dated snapshots; the verification above is the newer deployment observation.
+
+No runtime generative-AI API, RunPod execution or real Orbyte connection is claimed. Declare third-party libraries, visual assets and AI development assistance in the final technology declaration.
 
 ## Run locally
-Install Python 3.12 and run from the repository root:
+Use Python 3.12 from the repository root:
 
 ```bash
 python -m venv .venv
-```
-
-Activate the environment:
-- Windows PowerShell: `.\.venv\Scripts\Activate.ps1`
-- macOS/Linux: `source .venv/bin/activate`
-
-```bash
 python -m pip install -r backend/requirements.txt
 python run.py
 ```
 
-Open http://127.0.0.1:8000 and http://127.0.0.1:8000/docs. The default launcher deliberately binds to loopback. Do not open the HTML file directly.
+Activate the virtual environment before installation. Open http://127.0.0.1:8000. The local launcher uses loopback; do not use it as the cloud startup command. Replit must listen on 0.0.0.0:5000 with the existing working production configuration.
 
-## Run on Replit
-Use the Start application workflow. The server must listen on `0.0.0.0:5000`, matching the configured internal port. Production must use an explicit server startup command; the default local launcher is not suitable. See [Replit operation notes](replit.md). No inference API key is needed for the current CPU implementation.
+## Demo
+1. Open the live application and select Try demo for an explicitly synthetic example.
+2. Review the forecast and suggested quantities.
+3. Click Approve plan. The timestamp and approved export should appear.
+4. For historical mode, generate labelled synthetic history, import it and train with at least 21 recorded dates.
+5. Forecast a date after the saved history, then record synthetic actual sales for comparison.
 
-The live health check on 2026-10-24 returned zero saved sales and no trained model. For the competition, load **team-created synthetic data only** and keep it labelled. An empty live database is not evidence that a local dataset was deployed.
-
-## Demo workflow
-1. Open the live site. Use Try demo for a fixed-rule simulation.
-2. For historical/model mode, generate synthetic history as described in [Data and models](docs/DATA_AND_MODELS.md).
-3. Upload the synthetic CSV and explicitly import it; choosing a file alone does not save it.
-4. With at least 21 distinct saved dates, train and compare models.
-5. Forecast a date after the latest saved history, review quantities and notes, and export the plan.
-6. Record only synthetic actual sales for feedback. Do not claim this flow contains formal approval or real business impact.
-
-## Documentation
-- [Architecture and code map](docs/ARCHITECTURE.md)
-- [API contract](docs/API.md)
-- [Data, models and evaluation](docs/DATA_AND_MODELS.md)
-- [Validation evidence and limitations](docs/VALIDATION.md)
-- [Competition requirements and open tasks](docs/COMPETITION_READINESS.md)
-- [External resources and AI-use declaration](docs/RESOURCE_DECLARATION.md)
+Demo results are excluded from historical performance metrics. WAPE is an error rate, not classification accuracy. Earlier offline synthetic comparisons are not independent evidence of real-world savings.
 
 ## Checks
 ```bash
 python -m pip install -r requirements-dev.txt
 python -m unittest discover -s tests -v
 ruff check backend forecasting tests run.py
-ruff format --check backend forecasting tests run.py
 ```
 
-The earlier isolated verification passed 25 tests. This documentation-only change does not claim a new cloud acceptance test.
-
-## Submission boundaries
-The repository is currently private. Provide judges access or make an explicitly reviewed public release; this cleanup does not change visibility. Do not commit credentials, local databases, model binaries, private sales, contact details or raw email content. Cloud data durability, approval/RBAC and the sponsor-use requirement remain open. The [official domain brief](https://drive.google.com/file/d/11wqbeO-HYep-DJPQ-LPZnrZfQvCgr5BU/view) requires synthetic data, permits simulated identity/roles and does not require live Orbyte access.
+The approval integration passed 33 regression tests against the GitHub-compatible backend, including 8 approval cases. Public UI generation/approval and API persistence were separately observed for the proof PDF.
 
 ## License
-Project code is distributed under [Apache License 2.0](LICENSE). Dependencies and external visual assets retain their own licenses and terms.
+Project code: [Apache License 2.0](LICENSE). Third-party dependencies and external assets retain their own licenses. Do not commit credentials, real customer data, local databases, raw account emails or voucher codes.
